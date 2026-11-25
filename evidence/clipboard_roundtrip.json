@@ -1,0 +1,26 @@
+{
+    "check":  "windows_clipboard_roundtrip",
+    "timestamp_utc":  "2026-11-25T03:59:02Z",
+    "input_file":  "C:\\Users\\28643\\Downloads\\llm-invisible-guard\\evidence\\clipboard_payload.txt",
+    "input_chars":  502,
+    "clipboard_chars":  502,
+    "text_identical":  true,
+    "sha256_input_utf8":  "1eb6362818a4feaed15ad7a89a6fdddfea9ac46768ea8c50e54161f1d2b79105",
+    "sha256_clipboard_utf8":  "1eb6362818a4feaed15ad7a89a6fdddfea9ac46768ea8c50e54161f1d2b79105",
+    "invisible_counts_input":  {
+                                   "zero_width_u200b":  245,
+                                   "zero_width_u200c":  147,
+                                   "zero_width_u200d":  0,
+                                   "tag_chars":  22,
+                                   "variation_selectors":  0
+                               },
+    "invisible_counts_clipboard":  {
+                                       "zero_width_u200b":  245,
+                                       "zero_width_u200c":  147,
+                                       "zero_width_u200d":  0,
+                                       "tag_chars":  22,
+                                       "variation_selectors":  0
+                                   },
+    "first_invisible_codepoints":  "U+200B U+200C U+200B U+200C U+200B U+200B U+200C U+200C U+200B U+200C U+200B U+200C U+200C U+200B U+200B U+200C U+200B U+200C",
+    "interpretation":  "If text_identical is true, the OS clipboard preserved the invisible payload bytes."
+}

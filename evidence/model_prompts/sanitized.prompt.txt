@@ -1,0 +1,9 @@
+<|im_start|>system
+You are a helpful assistant. Answer the user's question using only the document.<|im_end|>
+<|im_start|>user
+Document:
+Remote Work Policy (2026)
+Employees may work remotely up to three days per week. Core collaboration hours are 10:00-15:00 local time. Travel receipts must be submitted within 30 days of return.
+
+Question: How many days per week may employees work remotely?<|im_end|>
+<|im_start|>assistant

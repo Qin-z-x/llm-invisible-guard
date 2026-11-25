@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "invisi-guard"
+version = "0.1.0"
+description = "Detect, decode and sanitize invisible-Unicode prompt injection (zero-width, bidi/Trojan Source, Unicode Tags ASCII smuggling, variation selectors, homoglyphs)."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "invisi-guard contributors" }]
+keywords = [
+  "prompt-injection",
+  "unicode",
+  "security",
+  "llm",
+  "ai-safety",
+  "trojan-source",
+  "ascii-smuggling",
+  "sanitizer",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Security",
+  "Topic :: Text Processing :: Filters",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+# Optional extras only for scripts/model_demo.py; the invisi_guard core has no deps.
+model = ["torch>=2.0", "transformers>=4.40"]
+
+[project.scripts]
+invisi-guard = "invisi_guard.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Qin-z-x/llm-invisible-guard"
+Repository = "https://github.com/Qin-z-x/llm-invisible-guard"
+Issues = "https://github.com/Qin-z-x/llm-invisible-guard/issues"
+Changelog = "https://github.com/Qin-z-x/llm-invisible-guard/blob/main/CHANGELOG.md"
+Evidence = "https://github.com/Qin-z-x/llm-invisible-guard/blob/main/docs/EVIDENCE.md"
+ThreatModel = "https://github.com/Qin-z-x/llm-invisible-guard/blob/main/docs/THREAT_MODEL.md"
+
+[tool.setuptools]
+packages = ["invisi_guard"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

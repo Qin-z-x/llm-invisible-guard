@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Qin-z-x/llm-invisible-guard/main/docs/finding.schema.json",
+  "title": "invisi-guard finding",
+  "description": "One deterministic finding emitted by invisi_guard.scan(). Offsets (start, end) are Python str indices, i.e. Unicode code point offsets into the scanned text; end is exclusive. line and column are 1-based; column counts code points.",
+  "type": "object",
+  "required": [
+    "code",
+    "kind",
+    "severity",
+    "start",
+    "end",
+    "length",
+    "line",
+    "column",
+    "message",
+    "data"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "string",
+      "pattern": "^IG-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Stable rule identifier, e.g. IG-BIDI-OVERRIDE or IG-ZW-ENC."
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "bidi_control",
+        "zero_width",
+        "unicode_tag",
+        "variation_selector",
+        "confusable",
+        "encoded_payload"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["low", "medium", "high"],
+      "description": "low = informational, medium = weird but not necessarily hostile, high = decodable payload or control sequence without a benign explanation."
+    },
+    "start": {"type": "integer", "minimum": 0},
+    "end": {"type": "integer", "minimum": 0},
+    "length": {"type": "integer", "minimum": 0},
+    "line": {"type": "integer", "minimum": 1},
+    "column": {"type": "integer", "minimum": 1},
+    "message": {"type": "string", "minLength": 1},
+    "data": {"type": "object"}
+  }
+}
