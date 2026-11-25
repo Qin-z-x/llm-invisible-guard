@@ -150,10 +150,8 @@ python -m invisi_guard decode examples/poisoned_memo.txt --json</pre>
   var docEl = document.getElementById("doc");
 
   function isZW(c) { var cp = c.charCodeAt(0); return cp === 0x200b || cp === 0x200c || cp === 0x200d; }
-  function isTag(c) { var cp = c.charCodeAt(0); return cp >= 0xd800 && cp <= 0xdb7f; }
-  function tagCodePoint(pair) {
-    // Decode a surrogate pair to a code point.
-    var hi = pair.charCodeAt(0), lo = pair.charCodeAt(1);
+  function tagCodePoint(hi, lo) {
+    // Decode a UTF-16 surrogate pair to a code point.
     return (hi - 0xd800) * 0x400 + (lo - 0xdc00) + 0x10000;
   }
   function printableRatio(s) {
@@ -232,15 +230,19 @@ python -m invisi_guard decode examples/poisoned_memo.txt --json</pre>
     return best;
   }
   function decodeTags(text) {
-    var runs = makeRuns(text, isTag);
+    // Unicode Tags block: U+E0000..U+E007F, always encoded as a UTF-16
+    // surrogate pair (high surrogate 0xDB40). Decode one full pair at a time.
     var decoded = "";
-    for (var i = 0; i < runs.length; i++) {
-      for (var k = 0; k + 1 < runs[i].text.length + 1; k += 2) {
-        var pair = runs[i].text.slice(k, k + 2);
-        if (pair.length !== 2) { break; }
-        var cp = tagCodePoint(pair);
-        if (cp >= 0xE0020 && cp <= 0xE007E) { decoded += String.fromCharCode(cp - 0xE0000); }
+    for (var i = 0; i + 1 < text.length; i++) {
+      var hi = text.charCodeAt(i);
+      if (hi !== 0xdb40) { continue; }
+      var lo = text.charCodeAt(i + 1);
+      if (lo < 0xdc00 || lo > 0xdc7f) { continue; }
+      var cp = tagCodePoint(hi, lo);
+      if (cp >= 0xe0020 && cp <= 0xe007e) {
+        decoded += String.fromCharCode(cp - 0xe0000);
       }
+      i++; // consume the low surrogate too
     }
     return decoded;
   }
@@ -248,15 +250,16 @@ python -m invisi_guard decode examples/poisoned_memo.txt --json</pre>
     var out = "";
     for (var i = 0; i < text.length; i++) {
       var cp = text.charCodeAt(i);
-      var invisible = (cp >= 0x200b && cp <= 0x200d) || (cp >= 0x202a && cp <= 0x202e) ||
-        (cp >= 0x2060 && cp <= 0x2064) || cp === 0xfeff ||
-        (cp >= 0xfe00 && cp <= 0xfe0f) || cp === 0x200e || cp === 0x200f ||
-        (cp >= 0x061c && cp <= 0x061c);
-      if (isTag(text[i])) {
-        // Skip a full astral tag character (surrogate pair).
+      // Tags block characters are surrogate pairs: drop both code units.
+      if (cp === 0xdb40 && i + 1 < text.length && text.charCodeAt(i + 1) >= 0xdc00 &&
+          text.charCodeAt(i + 1) <= 0xdc7f) {
         i++;
         continue;
       }
+      var invisible = (cp >= 0x200b && cp <= 0x200d) || (cp >= 0x202a && cp <= 0x202e) ||
+        (cp >= 0x2060 && cp <= 0x2064) || cp === 0xfeff ||
+        (cp >= 0xfe00 && cp <= 0xfe0f) || cp === 0x200e || cp === 0x200f ||
+        cp === 0x061c;
       if (!invisible) { out += text[i]; }
     }
     return out;
@@ -314,6 +317,9 @@ python -m invisi_guard decode examples/poisoned_memo.txt --json</pre>
   }
   if (params.has("clean")) {
     document.getElementById("clean-panel").classList.add("open");
+  }
+  if (document.getElementById("reveal-panel").classList.contains("open")) {
+    document.getElementById("hint").textContent = "revealed decoded hidden payloads";
   }
 })();
 </script>

@@ -1,4 +1,4 @@
-# Captured terminal session (real CLI output, captured 2026-11-25 12:01:03)
+# Captured terminal session (real CLI output, captured 2026-11-25 12:05:46)
 
 $ python -m invisi_guard demo
 invisi-guard 0.1.0  demo -- deterministic hidden-instruction demo
@@ -220,7 +220,7 @@ All full-time employees receive 15 days of paid annual leave per year.\u200B\u20
 [exit code: 0]
 
 $ python -m unittest discover -s tests -t .
-Ran 136 tests in 2.805s
+Ran 136 tests in 2.939s
 
 OK
 [exit code: 0]
