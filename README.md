@@ -5,6 +5,8 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 [![stdlib-only core](https://img.shields.io/badge/core-stdlib%20only-brightgreen.svg)](scripts/check_core_deps.py)
 
+> **If this is useful, a star or fork helps others find it.** It is a small, unaided project; stars/fork counts are the honest signal that keeps it maintained. No accounts, no telemetry, no paid promotion.
+
 **Detect, decode and sanitize invisible-Unicode prompt injection** — zero-width
 characters, bidirectional controls (Trojan Source), Unicode Tags ASCII smuggling
 and variation-selector payloads — with a standard-library-only Python core and a
@@ -245,6 +247,19 @@ CI 门禁退出码（`--fail-on high` 时发现高危即返回 1）。
 小模型上**没有**被执行——负结果如实记录；同时验证了隐藏载荷在分词后会原样进入
 模型上下文，且可经由真实剪贴板/文档链路无损传递。项目是防御工具与本地演示，
 不声称发现新漏洞或新 CVE。
+
+## Related projects (same author, independent, stdlib-first)
+
+Other tools by the same author covering adjacent LLM failure surfaces. Each is independent: use or fork only the one you need; every README states its own limits.
+
+- [yixin-go](https://github.com/Qin-Z-x/yixin-go) - local-first Windows Go (weiqi/baduk) sparring partner built on KataGo + Human SL.
+- [llm-failbench](https://github.com/Qin-Z-x/llm-failbench) - 100 deterministic, judge-free failure probes for LLMs, with a cited evidence atlas and a CI regression gate.
+- [llm-json-doctor](https://github.com/Qin-Z-x/llm-json-doctor) - deterministic repair + JSON Schema validation for malformed LLM JSON; no LLM calls, stdlib only.
+- [llm-exfil-guard](https://github.com/Qin-Z-x/llm-exfil-guard) - detect data exfiltration through rendered LLM output: image beacons, hidden content, remote loads.
+- [slopsquat-guard](https://github.com/Qin-Z-x/slopsquat-guard) - flag hallucinated / typosquatted PyPI and npm dependency names before you install them.
+- [regex-redos-guard](https://github.com/Qin-Z-x/regex-redos-guard) - ReDoS (catastrophic backtracking) risk detection for LLM-generated regexes, static + timed probes.
+
+If one of these fits your pipeline, a star/fork on that repo is the only help this project asks for.
 
 ## License and acknowledgements
 
